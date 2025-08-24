@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trainex — Create your account</title>
+  <meta name="description" content="Create your Trainex account — same look and feel as the landing page." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ---- Theme (mirrors your landing page) ---- */
+    :root{
+      --bg: #0b1020;
+      --surface: #0f152b;
+      --surface-2: #151c36;
+      --text: #e8ecff;
+      --muted: #a9b2d6;
+      --brand: #6aa3ff;
+      --brand-2: #7bdcff;
+      --ring: rgba(122, 189, 255, 0.35);
+      --danger: #ff6a6a;
+    }
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg) 0%, #0b1020 60%, #0a0f1f 100%);
+      line-height: 1.65;
+    }
+    h1,h2,h3{ line-height: 1.2; margin: 0 0 .35em; }
+    h1{ font-size: clamp(2rem, 1.2vw + 1.6rem, 2.6rem); font-weight: 800; letter-spacing: -0.02em; }
+    h2{ font-size: clamp(1.4rem, .9vw + 1rem, 2rem); font-weight: 800; }
+    h3{ font-size: 1.1rem; font-weight: 700; }
+    p{ margin: 0 0 1em; color: var(--muted); }
+    a{ color: var(--text); text-decoration: none; }
+    .container{ width: min(1120px, calc(100% - 2rem)); margin-inline: auto; }
+    .center{ text-align: center; }
+
+    /* Header (same as landing) */
+    .site-header{ position: sticky; top: 0; z-index: 50; backdrop-filter: blur(8px); background: color-mix(in oklab, var(--bg) 86%, transparent); border-bottom: 1px solid rgba(255,255,255,.06); }
+    .header-inner{ display:flex; align-items:center; justify-content:space-between; padding: .9rem 0; gap: .75rem; }
+    .brand{ font-weight: 900; letter-spacing: .02em; font-size: 1.3rem; background: linear-gradient(90deg, var(--brand), var(--brand-2)); -webkit-background-clip: text; color: transparent; }
+    .nav{ display:flex; gap: 1rem; align-items:center; }
+    .nav a{ color: var(--muted); font-weight:600; padding: .4rem .6rem; border-radius: .5rem; }
+    .nav a:hover{ color: var(--text); background: rgba(255,255,255,.06); }
+    .nav-toggle{ display:none; background:none; border:0; width:42px; height:36px; border-radius:.75rem; padding:6px; align-items:center; justify-content:center; gap:4px; }
+    .nav-toggle span{ display:block; height:2px; width:100%; background: var(--text); }
+    @media (max-width: 880px){
+      .nav{ display:none; position:absolute; right:.75rem; top:56px; flex-direction:column; background: var(--surface); padding:.5rem; border-radius:.75rem; width: 260px; border:1px solid rgba(255,255,255,.08); }
+      .nav.show{ display:flex; }
+      .nav-toggle{ display:flex; }
+    }
+
+    /* Buttons (same tokens) */
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.75rem 1rem; border-radius:.8rem; font-weight:700; border:1px solid rgba(255,255,255,.12); cursor:pointer; color: var(--text); background: rgba(255,255,255,.06); transition: transform .06s ease, background .2s ease, border-color .2s ease; }
+    .btn:hover{ transform: translateY(-1px); }
+    .btn-primary{ background: linear-gradient(180deg, var(--brand), var(--brand-2)); color:#0a0f1f; border-color: transparent; }
+    .btn-ghost{ background: rgba(255,255,255,.06); }
+    .btn-block{ width:100%; }
+    .btn-icon{ display:inline-grid; place-items:center; width:1.2rem; height:1.2rem; border-radius:.25rem; }
+
+    /* Auth layout */
+    .auth{ position: relative; padding: clamp(3rem, 6vw, 6rem) 0; }
+    .auth:before{
+      content:""; position:absolute; inset:0;
+      background:
+        radial-gradient(800px 300px at 20% -20%, color-mix(in oklab, var(--brand) 20%, transparent), transparent 60%),
+        radial-gradient(600px 200px at 90% 10%, color-mix(in oklab, var(--brand-2) 18%, transparent), transparent 60%);
+      pointer-events:none;
+    }
+    .auth-grid{ display:grid; grid-template-columns: 1.1fr 1fr; gap: clamp(1rem, 4vw, 3rem); align-items:center; }
+    @media (max-width: 960px){ .auth-grid{ grid-template-columns:1fr; } }
+
+    .card{ background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%); border:1px solid rgba(255,255,255,.08); border-radius: 1.25rem; padding: 1.25rem; box-shadow: 0 20px 50px rgba(0,0,0,.25); }
+
+    /* Form */
+    .auth-head{ margin-bottom: 1rem; }
+    .auth-head .fineprint{ font-size:.9rem; }
+    .form{ display:grid; gap:.85rem; }
+    .field{ display:grid; gap:.4rem; }
+    .label{ font-weight:700; color: var(--text); font-size:.95rem; }
+    .input, .select{ width:100%; padding:.8rem .9rem; border-radius:.8rem; border:1px solid rgba(255,255,255,.12); outline: none; background: color-mix(in oklab, var(--surface) 86%, transparent); color: var(--text); }
+    .input:focus, .select:focus{ border-color: var(--brand); box-shadow: 0 0 0 4px var(--ring); }
+    .row{ display:grid; grid-template-columns: 1fr 1fr; gap:.75rem; }
+    @media (max-width: 560px){ .row{ grid-template-columns:1fr; } }
+
+    .password-wrap{ position: relative; }
+    .toggle-pass{ position:absolute; right:.5rem; top:50%; transform: translateY(-50%); background: none; border: 0; color: var(--muted); cursor: pointer; font-weight:700; }
+
+    .or{ display:grid; grid-template-columns: 1fr auto 1fr; gap:.75rem; align-items:center; margin:.5rem 0; }
+    .or:before, .or:after{ content:""; height:1px; background: rgba(255,255,255,.12); }
+
+    .terms{ display:flex; gap:.5rem; font-size:.9rem; color: var(--muted); align-items: flex-start; }
+
+    .error{ color: var(--danger); font-size:.9rem; display:none; }
+
+    /* Right side panel */
+    .promo{ border:1px solid var(--ring); background: linear-gradient(180deg, rgba(106,163,255,.12), rgba(123,220,255,.06)); border-radius: 1.25rem; padding: 1.25rem; display:flex; flex-direction:column; gap:.75rem; }
+    .promo .badge{ font-size:.75rem; font-weight:800; background: var(--brand); color:#051029; padding:.25rem .5rem; border-radius:.5rem; width: max-content; }
+    .promo .list{ list-style:none; padding:0; margin:0; display:grid; gap:.35rem; }
+    .promo .list li{ position:relative; padding-left: 1.3rem; }
+    .promo .list li:before{ content:"✔"; position:absolute; left:0; top:.1rem; color: var(--brand); font-weight:900; }
+
+    /* Trainers section */
+    .section{ padding: clamp(2.5rem, 5vw, 4.5rem) 0; }
+    .section.alt{ background: color-mix(in oklab, var(--surface-2) 60%, transparent); }
+    .grid3{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    @media (max-width: 960px){ .grid3{ grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px){ .grid3{ grid-template-columns: 1fr; } }
+
+    .trainer{ display:grid; grid-template-columns: auto 1fr; gap:.9rem; align-items:center; }
+    .avatar{ width:52px; height:52px; border-radius:50%; background: linear-gradient(180deg, var(--brand), var(--brand-2)); color:#0a0f1f; font-weight:900; display:grid; place-items:center; }
+    .meta{ color: var(--muted); font-size:2rem; }
+    .chip-row{ display:flex; gap:.4rem; flex-wrap:wrap; }
+    .chip{ font-size:.75rem; border:1px solid rgba(255,255,255,.16); padding:.2rem .5rem; border-radius:.5rem; }
+    .brand{font-size: 30px;
+
+    /* Footer tiny */
+    .site-footer{ border-top: 1px solid rgba(255,255,255,.06); padding: 2rem 0; }
+    .footer-inner{ display:grid; grid-template-columns: 1fr auto 1fr; align-items:center; gap: .75rem; }
+    .footer-inner .muted{ color: var(--muted); text-align:right; }
+    @media (max-width: 720px){ .footer-inner{ grid-template-columns: 1fr; text-align:center; } .footer-inner .muted{ text-align: center; } }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="brand">Trainex</a>
+      <nav class="nav" id="primary-nav">
+        <a href="#trainers">Trainers</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <button id="nav-toggle" class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Auth -->
+    <section class="auth">
+      <div class="container auth-grid">
+        <!-- Form Card -->
+        <div class="card">
+          <div class="auth-head">
+            <h1>Create your Trainex account</h1>
+            <p class="fineprint">Free 30‑day trial • No setup fees • Cancel anytime</p>
+          </div>
+
+          <form id="signup-form" class="form" novalidate>
+            <div class="row">
+              <div class="field">
+                <label for="fullName" class="label">Full name</label>
+                <input class="input" id="fullName" name="fullName" type="text" placeholder="e.g. Priya Sharma" required />
+              </div>
+              <div class="field">
+                <label for="email" class="label">Work email</label>
+                <input class="input" id="email" name="email" type="email" placeholder="name@college.edu" required />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label for="role" class="label">Register as</label>
+                <select id="role" name="role" class="select" required>
+                  <option value="" disabled selected>Select role</option>
+                  <option>Trainer / Industry Expert</option>
+                  <option>College / Institute</option>
+                  <option>Student</option>
+                </select>
+              </div>
+              <div class="field password-wrap">
+                <label for="password" class="label">Password</label>
+                <input class="input" id="password" name="password" type="password" minlength="8" placeholder="Minimum 8 characters" required />
+                <button type="button" class="toggle-pass" aria-label="Show password" id="toggle-pass">Show</button>
+              </div>
+            </div>
+
+            <div class="terms">
+              <input type="checkbox" id="terms" required />
+              <label for="terms">I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</label>
+            </div>
+            <div class="error" id="form-error">Please fill all required fields correctly.</div>
+
+            <button type="submit" class="btn btn-primary btn-block">Create account</button>
+
+            <div class="or"><span></span>or<span></span></div>
+            <button type="button" class="btn btn-ghost btn-block" id="google-btn">
+              <span class="btn-icon" aria-hidden="true">G</span> Continue with Google
+            </button>
+
+            <p class="fineprint">Already have an account? <a href="" id="login-link">Log in</a></p>
+          </form>
+        </div>
+
+        <!-- Promo / Highlights -->
+        <aside class="promo">
+          <span class="badge">New</span>
+          <h3>Why join Trainex?</h3>
+          <ul class="list">
+            <li>Smart scheduling and automated certificates</li>
+            <li>Verified expert directory & live projects</li>
+            <li>One‑click NAAC/NBA friendly reports</li>
+            <li>SSO & Google Workspace support</li>
+          </ul>
+          <p class="fineprint">Need help? <a href="#">Schedule a demo</a> — no credit card required.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Trainers -->
+    <section class="section alt" id="trainers">
+      <div class="container">
+        <div class="section-head center">
+          <h2>Featured Trainers</h2>
+          <p class="sub">Discover verified experts by domain, company and experience.</p>
+        </div>
+        <div class="grid3">
+          <!-- Trainer 1 -->
+          <article class="card trainer">
+            <div class="avatar" aria-hidden="true">AK</div>
+            <div>
+              <h3>Anil Kumar</h3>
+              <div class="meta">Principal Architect — <strong>TCS</strong></div>
+              <div class="chip-row">
+                <span class="chip">Cloud & DevOps</span>
+                <span class="chip">AWS</span>
+                <span class="chip">12 yrs</span>
+              </div>
+            </div>
+          </article>
+          <!-- Trainer 2 -->
+          <article class="card trainer">
+            <div class="avatar" aria-hidden="true">PS</div>
+            <div>
+              <h3>Priya Singh</h3>
+              <div class="meta">Data Scientist — <strong>Google</strong></div>
+              <div class="chip-row">
+                <span class="chip">Machine Learning</span>
+                <span class="chip">NLP</span>
+                <span class="chip">8 yrs</span>
+              </div>
+            </div>
+          </article>
+          <!-- Trainer 3 -->
+          <article class="card trainer">
+            <div class="avatar" aria-hidden="true">RM</div>
+            <div>
+              <h3>Rohit Mehta</h3>
+              <div class="meta">Senior QA Lead — <strong>Infosys</strong></div>
+              <div class="chip-row">
+                <span class="chip">Software Testing</span>
+                <span class="chip">Automation</span>
+                <span class="chip">10 yrs</span>
+              </div>
+            </div>
+          </article>
+          <!-- Trainer 4 -->
+          <article class="card trainer">
+            <div class="avatar" aria-hidden="true">NZ</div>
+            <div>
+              <h3>Neha Zaveri</h3>
+              <div class="meta">Product Manager — <strong>Flipkart</strong></div>
+              <div class="chip-row">
+                <span class="chip">Product Strategy</span>
+                <span class="chip">UX Research</span>
+                <span class="chip">7 yrs</span>
+              </div>
+            </div>
+          </article>
+          <!-- Trainer 5 -->
+          <article class="card trainer">
+            <div class="avatar" aria-hidden="true">AS</div>
+            <div>
+              <h3>Aisha Shaikh</h3>
+              <div class="meta">Security Engineer — <strong>Microsoft</strong></div>
+              <div class="chip-row">
+                <span class="chip">Cybersecurity</span>
+                <span class="chip">Network Defense</span>
+                <span class="chip">9 yrs</span>
+              </div>
+            </div>
+          </article>
+          <!-- Trainer 6 -->
+          <article class="card trainer">
+            <div class="avatar" aria-hidden="true">VD</div>
+            <div>
+              <h3>Vikas Dutta</h3>
+              <div class="meta">Analytics Lead — <strong>Accenture</strong></div>
+              <div class="chip-row">
+                <span class="chip">Data Analytics</span>
+                <span class="chip">Power BI</span>
+                <span class="chip">11 yrs</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="brand">Trainex</div>
+      <nav class="nav">
+        <a href="#trainers">Trainers</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </nav>
+      <div class="muted">© <span id="year"></span> Trainex. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    const toggle = document.getElementById('nav-toggle');
+    const nav = document.getElementById('primary-nav');
+    toggle?.addEventListener('click', () => nav.classList.toggle('show'));
+    nav?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('show')));
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Password show/hide
+    const pass = document.getElementById('password');
+    const passToggle = document.getElementById('toggle-pass');
+    passToggle.addEventListener('click', () => {
+      const isHidden = pass.type === 'password';
+      pass.type = isHidden ? 'text' : 'password';
+      passToggle.textContent = isHidden ? 'Hide' : 'Show';
+      passToggle.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+    });
+
+    // Pretend Google OAuth
+    document.getElementById('google-btn').addEventListener('click', () => {
+      alert('Google sign‑in would open here. Connect your OAuth later.');
+    });
+
+    // Form validation (client side)
+    const form = document.getElementById('signup-form');
+    const error = document.getElementById('form-error');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      error.style.display = 'none';
+
+      if(!form.checkValidity()){
+        error.style.display = 'block';
+        return;
+      }
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      console.log('Signup data', data);
+      // TODO: send to your backend API
+      alert('Account created for ' + data.fullName + '!');
+      form.reset();
+    });
+
+    // Login link (navigate or open modal)
+    document.getElementById('login-link').addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('Route to /login page. You can reuse the same styles.');
+    });
+  </script>
+</body>
+</html>
